@@ -13,6 +13,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use("/admin", adminRouter)
+app.use("/user", userRouter)
 
 mongoose.connect(process.env.MONGOOSE_URL, { useNewUrlParser: true, useUnifiedTopology: true, dbName: "courses" });
 
