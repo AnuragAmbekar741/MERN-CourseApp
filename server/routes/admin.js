@@ -2,8 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const { Admin, Course } = require('../db/index')
 const jwt = require('jsonwebtoken')
-const authenticateJwt = require('../middleware/auth')
-const { AuthStatus } = require('@clerk/nextjs/dist/types/server')
+const { authenticateJwt } = require('../middleware/auth')
 require('dotenv').config();
 
 
@@ -38,10 +37,10 @@ router.post('/login', async (req, res) => {
 })
 
 router.post('/courses', authenticateJwt, async (req, res) => {
-    const newCourse = new Course(req.body)
-    await Course.save()
-    res.json({ message: 'Course sucessfully created', courseId: newCourse.id })
-})
+    const course = new Course(req.body);
+    await course.save();
+    res.json({ message: 'Course created successfully', courseId: course.id });
+});
 
 router.put('/course/:courseId', authenticateJwt, async (req, res) => {
     const courseToUpdate = await Course.findByIdAndUpdate(req.params.courseId, req.body, { new: true })
