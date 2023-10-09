@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const { Admin, Course } = require('../db/index')
 const jwt = require('jsonwebtoken')
 const authenticateJwt = require('../middleware/auth')
+const { AuthStatus } = require('@clerk/nextjs/dist/types/server')
 require('dotenv').config();
 
 
@@ -36,7 +37,28 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.get('/courses', async (req, res) => {
+router.post('/courses', authenticateJwt, async (req, res) => {
+    const newCourse = new Course(req.body)
+    await Course.save()
+    res.json({ message: 'Course sucessfully created', courseId: newCourse.id })
+})
+
+router.put('/course/:courseId', authenticateJwt, async (req, res) => {
+    const courseToUpdate = await Course.findByIdAndUpdate(req.params.courseId, req.body, { new: true })
+    if (courseToUpdate) res.json({ message: 'Course sucessfully updated' })
+    else res.status(403).json({ message: 'Invalid course Id' })
+})
+
+router.get('/courses', authenticateJwt, async (req, res) => {
+    const courses = await Course.find({})
+    res.json({ courses })
+})
+
+router.get('/courses/:courseId', authenticateJwt, async (req, res) => {
+    const courseId = req.params.courseId
+    const course = await Course.findById({ courseId })
+    if (course) res.json({ course })
+    else res.status(403).json({ message: 'Invalid course Id' })
 })
 
 
