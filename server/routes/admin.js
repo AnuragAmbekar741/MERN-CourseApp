@@ -1,5 +1,4 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const { Admin, Course } = require('../db/index')
 const jwt = require('jsonwebtoken')
 const { authenticateJwt } = require('../middleware/auth')
@@ -7,6 +6,8 @@ require('dotenv').config();
 
 
 const router = express.Router()
+
+const SECRET_KEY = process.env.SECRET_KEY
 
 
 router.post('/signup', async (req, res) => {
@@ -19,7 +20,7 @@ router.post('/signup', async (req, res) => {
         const newAdminObj = { username: username, password: password }
         const newAdmin = new Admin(newAdminObj)
         newAdmin.save()
-        const token = jwt.sign({ username, role: 'admin' }, process.env.SECRET_KEY, { expiresIn: '1h' })
+        const token = jwt.sign({ username, role: 'admin' }, SECRET_KEY, { expiresIn: '1h' })
         res.json({ message: 'Admin created successfully', token })
     }
 })
@@ -28,7 +29,7 @@ router.post('/login', async (req, res) => {
     const { username, password } = req.body
     const admin = await Admin.findOne({ username, password })
     if (admin) {
-        const token = jwt.sign({ username, role: 'admin' }, process.env.SECRET_KEY, { expiresIn: '1h' })
+        const token = jwt.sign({ username, role: 'admin' }, SECRET_KEY, { expiresIn: '1h' })
         res.json({ message: 'Admin created successfully', token })
     }
     else {
