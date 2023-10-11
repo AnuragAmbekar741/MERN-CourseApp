@@ -1,9 +1,14 @@
+import {BrowserRouter,Route,Routes} from "react-router-dom"
+import Login from "./components/shared/Login"
 
 function App() {
-
   return (
-    <div>
-      <h1 className="text-3xl">Course app</h1>
+    <div>   
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login/>}/>
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }
