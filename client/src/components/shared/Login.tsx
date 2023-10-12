@@ -2,20 +2,24 @@ import { FormEvent, useState } from "react";
 
 const Login: React.FC = () => {
   const [userCred, setUserCred] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
-  const handleSubmit = (e:FormEvent) => {
+  const handleSubmit = async (e:FormEvent) => {
     e.preventDefault();
-    const respData = authUser();
+    const respData = await authUser();
     console.log(JSON.stringify(userCred));
     console.log(respData);
   };
 
   const authUser = async () => {
     const resp = await fetch("http://localhost:3011/user/login", {
-      method: "POST",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
       body: JSON.stringify(userCred),
     });
     const respData = await resp.json();
@@ -47,7 +51,7 @@ const Login: React.FC = () => {
                 <input
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 focus:outline-none px-3"
                   onChange={(e) =>
-                    setUserCred({ ...userCred, email: e.target.value })
+                    setUserCred({ ...userCred, username: e.target.value })
                   }
                 />
               </div>
@@ -74,7 +78,10 @@ const Login: React.FC = () => {
               </div>
             </div>
             <div>
-              <button type="submit">Sign In</button>
+              <button 
+                type="submit"
+                className="w-full bg-indigo-600 p-3 rounded-md text-white font-light"
+            >Sign In</button>
             </div>
           </form>
 
