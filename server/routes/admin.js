@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
     const admin = await Admin.findOne({ username, password })
     if (admin) {
         const token = jwt.sign({ username, role: 'admin' }, SECRET_KEY, { expiresIn: '1h' })
-        res.json({ message: 'Admin created successfully', token })
+        res.json({ message: 'Admin logged in successfully', token })
     }
     else {
         res.status(403).json({ message: 'Invalid username or password' })

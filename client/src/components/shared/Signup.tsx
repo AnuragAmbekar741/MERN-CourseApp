@@ -1,34 +1,40 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-const Login: React.FC = () => {
 
-  const Navigate = useNavigate()  
+const Signup:React.FC = () => {
 
+const Navigate = useNavigate()  
+
+const {authenticate} = useAuth()
 
   const [userCred, setUserCred] = useState({
     username: "",
     password: "",
   });
 
+  const [cpass,setCpass] = useState('')
+
   const [isFormSubmitted,setFormSubmit] = useState(false)
 
   const [error,setError] = useState('')
 
-  const {authenticate} = useAuth()
-
   const handleSubmit = async (e:FormEvent) => {
     e.preventDefault();
     setFormSubmit(true)
-    const respData = await authenticate('http://localhost:3011/admin/login',userCred);
+    const respData = await authUser();
     console.log(JSON.stringify(userCred));
     console.log(respData);
     if(respData.token) Navigate('/Dashboard')
     if(respData.message) setError(respData.message)
   };
 
-
-
+  const authUser = async () => {
+    const resp = await authenticate("http://localhost:3011/admin/signup",userCred);
+    const respData = await resp.json();
+    return respData;
+    // console.log(respData)
+  };
 
   return (
     <div className="flex justify-center">
@@ -39,8 +45,8 @@ const Login: React.FC = () => {
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             alt="Your Company"
           /> */}
-          <h2 className="mt-10 text-center text-3xl font-medium leading-9 tracking-tight text-white">
-            Sign in to your account
+          <h2 className="mt-5 text-center text-3xl font-normal leading-9 tracking-wide text-white ">
+            Create a new account
           </h2>
         </div>
 
@@ -52,13 +58,13 @@ const Login: React.FC = () => {
               </label>
               <div className="mt-2">
                 <input
-                  className={`block w-full rounded-md border-0 py-2 text-black shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:outline-none px-3`}
+                  className="block w-full rounded-md border-0 py-2 text-black shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:outline-none px-3"
                   onChange={(e) =>
                     setUserCred({ ...userCred, username: e.target.value })
                   }
                 />
-                <p className="my-1 text-sm font-light text-red-400">{isFormSubmitted && userCred.username==''?'Please enter valid username':''}</p>
               </div>
+                <p className="my-1 text-sm font-light text-red-400">{isFormSubmitted && userCred.username==''?'Please enter valid username':''}</p>
             </div>
 
             <div>
@@ -66,11 +72,6 @@ const Login: React.FC = () => {
                 <label className="block text-sm font-light leading-6 text-white">
                   Password
                 </label>
-                <div className="text-sm">
-                  <a className="font-semibold text-indigo-400 hover:text-indigo-500">
-                    Forgot password?
-                  </a>
-                </div>
               </div>
               <div className="mt-2">
                 <input
@@ -79,29 +80,46 @@ const Login: React.FC = () => {
                     setUserCred({ ...userCred, password: e.target.value })
                   }
                 />
-              </div>
                 <p className="my-1 text-sm font-light text-red-400">{isFormSubmitted && userCred.password==''?'Please enter valid password':''}</p>
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between">
+                <label className="block text-sm font-light leading-6 text-white">
+                  Confirm Password
+                </label>
+              </div>
+              <div className="mt-2">
+                <input
+                  className="block w-full rounded-md border-0 py-2 text-black shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:outline-none px-3"
+                  onChange={(e) =>
+                    setCpass(e.target.value)
+                  }
+                />
+                <p className="my-1 text-sm font-light text-red-400">{isFormSubmitted && userCred.password !== cpass ?'Password and Confirm Password does not match':''}</p>
+              </div>
             </div>
             <div>
               <button 
                 type="submit"
                 className="w-full bg-indigo-500 p-3 rounded-md text-white font-light"
-              >
-                Sign In
-              </button>
-              <p className="mt-5 text-center text-sm font-light text-red-400">{error}</p>
+               >
+                Sign Up
+               </button>
+               <p className="mt-5 text-center text-sm font-light text-red-400">{error}</p>
             </div>
           </form>
           <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?
+            Already a member?
             <a className="font-semibold leading-6 text-indigo-400 hover:text-indigo-500 mx-2">
-              Start a 14 day free trial
+              Login
             </a>
           </p>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Signup
