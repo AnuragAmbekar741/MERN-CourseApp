@@ -1,7 +1,7 @@
 import {BrowserRouter,Route,Routes} from "react-router-dom"
-import Login from "./components/shared/Login"
-import Dashboard from "./components/Dashboard"
-import Signup from "./components/shared/Signup"
+import Login from "./components/auth/Login"
+import Dashboard from "./components/dashboard/Dashboard"
+import Signup from "./components/auth/Signup"
 
 function App() {
   return (
