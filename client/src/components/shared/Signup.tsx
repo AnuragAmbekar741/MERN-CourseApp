@@ -22,19 +22,17 @@ const {authenticate} = useAuth()
   const handleSubmit = async (e:FormEvent) => {
     e.preventDefault();
     setFormSubmit(true)
-    const respData = await authUser();
+    const respData = await authenticate("http://localhost:3011/admin/signup",userCred);
     console.log(JSON.stringify(userCred));
     console.log(respData);
     if(respData.token) Navigate('/Dashboard')
-    if(respData.message) setError(respData.message)
+    if(respData.message){
+        setUserCred({username:'',password:''})
+        setError(respData.message)
+    }
   };
 
-  const authUser = async () => {
-    const resp = await authenticate("http://localhost:3011/admin/signup",userCred);
-    const respData = await resp.json();
-    return respData;
-    // console.log(respData)
-  };
+
 
   return (
     <div className="flex justify-center">
