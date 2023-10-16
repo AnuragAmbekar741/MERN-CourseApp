@@ -14,9 +14,14 @@ const adminSchema = new mongoose.Schema({
 const courseSchema = new mongoose.Schema({
     title: { type: String },
     description: { type: String },
+    category: { type: String },
     price: { type: Number },
     imageLink: { type: String },
     published: { type: Boolean },
+    createdBy: {
+        name: { type: String },
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    },
     reviews: [
         {
             text: { type: String },

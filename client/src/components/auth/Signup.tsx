@@ -25,7 +25,10 @@ const {authenticate} = useAuth()
     const respData = await authenticate("http://localhost:3011/admin/signup",userCred);
     console.log(JSON.stringify(userCred));
     console.log(respData);
-    if(respData.token) Navigate('/Dashboard')
+    if(respData.token){
+      localStorage.setItem('token',respData.token)
+      Navigate('/Dashboard')
+    }
     if(respData.message){
         setUserCred({username:'',password:''})
         setError(respData.message)
@@ -108,7 +111,7 @@ const {authenticate} = useAuth()
                <p className="mt-5 text-center text-sm font-light text-red-400">{error}</p>
             </div>
           </form>
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-10 text-center text-sm text-gray-500 cursor-pointer" onClick={()=>Navigate('/login')}>
             Already a member?
             <a className="font-semibold leading-6 text-indigo-400 hover:text-indigo-500 mx-2">
               Login

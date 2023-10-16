@@ -23,7 +23,10 @@ const Login: React.FC = () => {
     const respData = await authenticate('http://localhost:3011/admin/login',userCred);
     console.log(JSON.stringify(userCred));
     console.log(respData);
-    if(respData.token) Navigate('/Dashboard')
+    if(respData.token){
+      localStorage.setItem('token',respData.token)
+      Navigate('/Dashboard')
+    }
     if(respData.message) setError(respData.message)
   };
 
@@ -92,8 +95,8 @@ const Login: React.FC = () => {
               <p className="mt-5 text-center text-sm font-light text-red-400">{error}</p>
             </div>
           </form>
-          <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?
+            <p className="mt-10 text-center text-sm text-gray-500 cursor-pointer" onClick={()=>Navigate('/signup')}>
+              Not a member?
             <a className="font-semibold leading-6 text-indigo-400 hover:text-indigo-500 mx-2">
               Start a 14 day free trial
             </a>
