@@ -9,6 +9,18 @@ const router = express.Router()
 
 const SECRET_KEY = process.env.SECRET_KEY
 
+router.get("/me", authenticateJwt, async (req, res) => {
+    const admin = await Admin.findOne({ username: req.user.username });
+    if (!admin) {
+        res.status(403).json({ msg: "Admin doesnt exist" })
+        return
+    }
+    res.json({
+        username: admin.username
+    })
+});
+
+
 
 router.post('/signup', async (req, res) => {
     const { username, password } = req.body
