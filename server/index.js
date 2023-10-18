@@ -17,4 +17,4 @@ app.use("/user", userRouter)
 
 mongoose.connect(process.env.MONGOOSE_URL, { useNewUrlParser: true, useUnifiedTopology: true, dbName: "courses" });
 
-app.listen(3011, () => console.log("server running on port 3000"))
+app.listen(3011, () => console.log("server running on port 3011"))

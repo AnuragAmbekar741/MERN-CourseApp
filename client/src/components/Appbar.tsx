@@ -19,7 +19,7 @@ const Appbar:React.FC = () => {
         {
             adminAppbarlinks.map(link=>{
                 return (
-                    <div className='w-full flex py-2 px-5 justify-start items-center my-4 rounded-md cursor-pointer'>
+                    <div key={link.hash} className='w-full flex py-2 px-5 justify-start items-center my-4 rounded-md cursor-pointer'>
                         <link.icon className={`text-white ${collapse?'text-[2.5rem]':'text-4xl'}`}/>
                         <p className={`ml-7 font-medium ${collapse?'hidden':''}`}>
                             {link.name}
