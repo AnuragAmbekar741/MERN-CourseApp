@@ -7,8 +7,14 @@ const Dashboard:React.FC = () => {
 
   const {gettingData} = getData()
 
+  const init = async() =>{
+    const username = await gettingData("http://localhost:3011/admin/me")
+    console.log(username)
+    return username
+  }
+
   useEffect(()=>{
-    gettingData("http://localhost:3011/admin/me")
+    init()
   },[])
 
   return (
