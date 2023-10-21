@@ -11,13 +11,13 @@ const getData = () =>{
             const response  = await axios.get(url,{
                 method:"GET",
                 headers: {
-                    Authorization: "Bearer "+localStorage.getItem("token")
+                    "Authorization": "Bearer "+localStorage.getItem("token")
                 }
             })
             console.log(response.data)
             return response.data;
         }catch(err){
-            return {message:"Invalid Admin"}
+            return {message:"Something went wrong"}
         }
     }
     return {gettingData}
