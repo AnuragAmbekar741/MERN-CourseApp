@@ -78,6 +78,7 @@ const Login: React.FC = () => {
               <div className="mt-2">
                 <input
                   className="block w-full rounded-md border-0 py-2 text-black shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:outline-none px-3"
+                  type="password"
                   onChange={(e) =>
                     setUserCred({ ...userCred, password: e.target.value })
                   }
