@@ -5,7 +5,7 @@ import Signup from "./components/auth/Signup"
 
 function App() {
   return (
-    <div className="bg-gradient-to-r from-[#12100E] to-[#2B4162] w-screen h-screen">   
+    <div className="bg-gradient-to-r from-[#000000] to-[#130F40] w-screen h-screen">   
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login/>}/>

@@ -38,7 +38,7 @@ const Appbar:React.FC = () => {
             })
         }
         <div 
-            className='w-full flex -mb-80 py-2 px-5 justify-start items-center my-4 rounded-md cursor-pointer'
+            className='w-full flex py-2 px-5 justify-start items-center my-4 rounded-md cursor-pointer'
             onClick={logout}
         >
             <BiLogOut className={`text-white ${collapse?'text-[2.5rem]':'text-4xl'}`}/>
