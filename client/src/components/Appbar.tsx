@@ -28,7 +28,7 @@ const Appbar:React.FC = () => {
             adminAppbarlinks.map(link=>{
                 return (
                     <div key={link.hash} className='w-full flex py-2 px-5 justify-start items-center my-4 rounded-md cursor-pointer'>
-                        <link.icon className={`text-white ${collapse?'text-[2.5rem]':'text-4xl'}`}/>
+                        <link.icon className={`text-white ${collapse?'text-[2.5rem]':'text-3xl'}`}/>
                         <p className={`ml-7 font-medium ${collapse?'hidden':''}`}>
                             {link.name}
                         </p>
@@ -41,7 +41,7 @@ const Appbar:React.FC = () => {
             className='w-full flex py-2 px-5 justify-start items-center my-4 rounded-md cursor-pointer'
             onClick={logout}
         >
-            <BiLogOut className={`text-white ${collapse?'text-[2.5rem]':'text-4xl'}`}/>
+            <BiLogOut className={`text-white ${collapse?'text-[2.5rem]':'text-3xl'}`}/>
             <p className={`ml-7 font-medium ${collapse?'hidden':''}`}>Logout</p>
         </div>
     </div>
